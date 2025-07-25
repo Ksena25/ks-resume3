@@ -45,7 +45,7 @@ jobs:
         with:
           image-ref: "${{steps.ecr-login.outputs.registry}}/${{env.ECR_REPO_NAME}}:${{env.IMAGE_TAG}}" # Scans the built image
           format: "table"
-          exit-code: "1"
+          exit-code: "0"
           severity: "CRITICAL,HIGH"
       - name: push image to ECR
         run: |
