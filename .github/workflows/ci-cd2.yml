@@ -12,8 +12,8 @@ permissions:
   pull-requests: write 
 
 env:
-  AWS_REGION: us-east-1
-  AWS_ROLE: ${{ secrets.AWS_ACTIONS_ROLE }}
+  AWS_REGION: ${{secrets.AWS_REGION}}
+  AWS_ROLE: ${{secrets.AWS_ACTIONS_ROLE}}
 
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
-      - name: AWS Creds Config 
+      - name: AWS Creds Config # aws account credentials configuration
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_ROLE }} # OIDC Open ID Connect
