@@ -14,6 +14,8 @@ permissions:
 env:
   AWS_REGION: ${{secrets.AWS_REGION}}
   AWS_ROLE: ${{secrets.AWS_ACTIONS_ROLE}}
+  ECR_REPO_NAME: ${{secrets.ECR_REPO_NAME}}
+  IMAGE_TAG: ${{github.run_number}}
 
 
 jobs:
@@ -25,13 +27,18 @@ jobs:
       - name: AWS Creds Config # aws account credentials configuration
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_ROLE }} # OIDC Open ID Connect
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{env.AWS_ROLE}} # OIDC Open ID Connect
+          aws-region: ${{env.AWS_REGION}}
       
       - name: Login to ECR 
         uses: aws-actions/amazon-ecr-login@v1
         with: 
           mask-password: true
+      - name: Build tag and push image
+        id: build-and-push
+        run: |
+            docker build -t ${{steps.ecr-login.outputs.registry}}/${{env.ECR_REPO_NAME}}:${{env.IMAGE_TAG}} .
+            docker push ${{steps.ecr-login.outputs.registry}}/${{env.ECR_REPO_NAME}}:${{env.IMAGE_TAG}}
 
        
 
