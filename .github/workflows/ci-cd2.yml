@@ -22,11 +22,10 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
-      
       - name: AWS Creds Config 
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_ROLE }}
+          role-to-assume: ${{ env.AWS_ROLE }} # OIDC Open ID Connect
           aws-region: ${{ env.AWS_REGION }}
       
       - name: Login to ECR 
