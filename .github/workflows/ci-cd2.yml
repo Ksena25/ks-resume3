@@ -34,6 +34,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with: 
           mask-password: true
+        id: ecr-login
       - name: Build tag and push image
         id: build-and-push
         run: |
