@@ -51,6 +51,16 @@ jobs:
         run: |
           docker push ${{steps.ecr-login.outputs.registry}}/${{env.ECR_REPO_NAME}}:${{env.IMAGE_TAG}}
 
+      - name: store image in github env
+        run: echo "Image=${{steps.ecr-login.outputs.registry}}/${{env.ECR_REPO_NAME}}:${{env.IMAGE_TAG}}" >> $GITHUB_ENV
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: build
+      
+
+
+
+
 
        
 
